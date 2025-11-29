@@ -16,7 +16,7 @@ fun main() {
             "1" -> add()
             "2" -> subtract()
             "3" -> multiply()
-            "4" -> devide()
+            "4" -> divide()
             else -> println("Неизвестная команда!")
         }
 
@@ -66,7 +66,7 @@ fun multiply() {
     println("${a * b}")
 }
 
-fun devide() {
+fun divide() {
     val a = readNumber("Введите первое число: ")
     val b = readNumber("Введите второе число: ")
 
