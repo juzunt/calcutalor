@@ -1,78 +1,65 @@
 fun main() {
-    println("===Kotlin Calculator===")
-
-    while (true) {
-        showMenu()
-        print("Ваш выбор: ")
-
-        val command = readln() ?: continue
-
-        if (command == "exit") {
-            println("До встречи!")
-            break
-        }
-
-        when (command) {
-            "1" -> add()
-            "2" -> subtract()
-            "3" -> multiply()
-            "4" -> divide()
-            else -> println("Неизвестная команда!")
-        }
-
-    }
-
-
+    runCalculator()
 }
 
-fun showMenu() {
-    println()
-    println("1 - Сложение")
-    println("2 - Вычитание")
-    println("3 - Умножение")
-    println("4 - Деление")
-    println("exit - выйти")
-    println()
-}
-
-fun readNumber(message: String): Double {
-    print(message)
+fun runCalculator() {
+    println("Калькулятор запущен")
 
     while (true) {
-        val input = readln()
-        val number = input.toDoubleOrNull()
+        printMenu()
 
-        if (number != null) return number
 
-        print("Неверный ввод, попробуйте еще раз: ")
+        when (readln()) {
+            "1" -> {
+                print("Введите выражение: ")
+                val input = readln()
+                val result = calculateSimpleExpression(input)
+
+                if (result == null) {
+                    println("Ошибка: не удалось разобрать выражение")
+                } else {
+                    println("Результат: $result")
+                }
+            }
+
+            "2" -> println("История пока пустая")
+            "3" -> {
+                println("Выход...")
+                break
+            }
+
+            else -> println("Неверный ввод, попробуйте снова")
+
+        }
     }
 }
 
-fun add() {
-    val a = readNumber("Введите первое число: ")
-    val b = readNumber("Введите второе число: ")
-    println("${a + b}")
+
+fun printMenu() {
+    println("====================")
+    println("       КАЛЬКУЛЯТОР")
+    println("====================")
+    println("1. Посчитать выражение")
+    println("2. История")
+    println("3. Выйти")
+    println("--------------------")
+    print("Ваш выбор: ")
 }
 
-fun subtract() {
-    val a = readNumber("Введите первое число: ")
-    val b = readNumber("Введите второе число: ")
-    println("${a - b}")
-}
+fun calculateSimpleExpression(expr: String): Double? {
+    val parts = expr.trim().split("\\s+".toRegex())
 
-fun multiply() {
-    val a = readNumber("Введите первое число: ")
-    val b = readNumber("Введите второе число: ")
-    println("${a * b}")
-}
+    if (parts.size != 3) return null
 
-fun divide() {
-    val a = readNumber("Введите первое число: ")
-    val b = readNumber("Введите второе число: ")
+    val a = parts[0].toDoubleOrNull() ?: return null
+    val op = parts[1]
+    val b = parts[2].toDoubleOrNull() ?: return null
 
-    if (b == 0.0) {
-        println("Ошибка: деление на ноль!")
-    } else {
-        println("${a / b}")
+    return when (op) {
+        "+" -> a + b
+        "-" -> a - b
+        "*" -> a * b
+        "/" -> if (b == 0.0) null else a / b
+        else -> null
     }
 }
