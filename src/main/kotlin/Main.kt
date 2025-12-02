@@ -5,6 +5,8 @@ fun main() {
 fun runCalculator() {
     println("Калькулятор запущен")
 
+    val history = mutableListOf<String>()
+
     while (true) {
         printMenu()
 
@@ -19,10 +21,20 @@ fun runCalculator() {
                     println("Ошибка: не удалось разобрать выражение")
                 } else {
                     println("Результат: $result")
+                    history.add("$input = $result")
                 }
             }
 
-            "2" -> println("История пока пустая")
+            "2" -> {
+                if (history.isEmpty()) {
+                    println("История пока пустая")
+                } else {
+                    for ((index, record) in history.withIndex()) {
+                        println("${index + 1}: $record")
+                    }
+                }
+            }
+
             "3" -> {
                 println("Выход...")
                 break
