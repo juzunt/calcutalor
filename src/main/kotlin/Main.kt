@@ -1,3 +1,5 @@
+import kotlin.math.exp
+
 fun main() {
     runCalculator()
 }
@@ -59,19 +61,22 @@ fun printMenu() {
 }
 
 fun calculateSimpleExpression(expr: String): Double? {
-    val parts = expr.trim().split("\\s+".toRegex())
+    val operators = charArrayOf('+','-','*','/')
+    val opIndex = expr.indexOfAny(operators)
+    if (opIndex == -1) return null
 
-    if (parts.size != 3) return null
+    val op = expr[opIndex]
+    val aString = expr.substring(0, opIndex).trim()
+    val bString = expr.substring(opIndex + 1).trim()
 
-    val a = parts[0].toDoubleOrNull() ?: return null
-    val op = parts[1]
-    val b = parts[2].toDoubleOrNull() ?: return null
+    val a = aString.toDoubleOrNull() ?: return null
+    val b = bString.toDoubleOrNull() ?: return null
 
     return when (op) {
-        "+" -> a + b
-        "-" -> a - b
-        "*" -> a * b
-        "/" -> if (b == 0.0) null else a / b
+        '+' -> a + b
+        '-' -> a - b
+        '*' -> a * b
+        '/' -> if (b == 0.0) null else a / b
         else -> null
     }
 }
