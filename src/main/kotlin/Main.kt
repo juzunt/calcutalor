@@ -1,5 +1,3 @@
-import kotlin.math.exp
-
 fun main() {
     runCalculator()
 }
@@ -61,7 +59,7 @@ fun printMenu() {
 }
 
 fun calculateSimpleExpression(expr: String): Double? {
-    val operators = charArrayOf('+','-','*','/')
+    val operators = charArrayOf('+', '-', '*', '/')
     val opIndex = expr.indexOfAny(operators)
     if (opIndex == -1) return null
 
