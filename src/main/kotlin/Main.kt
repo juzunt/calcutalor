@@ -63,6 +63,11 @@ fun calculateSimpleExpression(expr: String): Double? {
     val ops = setOf('+', '-', '*', '/')
     var opsIndex = -1
     for (i in 1 until s.length) {
+
+        if ((s[i] == '+' || s[i] == '-') && (s[i - 1] == '*' || s[i - 1] == '/')){
+            continue
+        }
+
         if (s[i] in ops) {
             opsIndex = i
             break
