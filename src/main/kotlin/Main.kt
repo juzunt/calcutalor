@@ -59,13 +59,21 @@ fun printMenu() {
 }
 
 fun calculateSimpleExpression(expr: String): Double? {
-    val operators = charArrayOf('+', '-', '*', '/')
-    val opIndex = expr.indexOfAny(operators)
-    if (opIndex == -1) return null
+    val s = expr.trim()
+    val ops = setOf('+', '-', '*', '/')
+    var opsIndex = -1
+    for (i in 1 until s.length) {
+        if (s[i] in ops) {
+            opsIndex = i
+            break
+        }
+    }
+    if (opsIndex == -1) return null
 
-    val op = expr[opIndex]
-    val aString = expr.substring(0, opIndex).trim()
-    val bString = expr.substring(opIndex + 1).trim()
+
+    val op = s[opsIndex]
+    val aString = s.substring(0, opsIndex)
+    val bString = s.substring(opsIndex + 1)
 
     val a = aString.toDoubleOrNull() ?: return null
     val b = bString.toDoubleOrNull() ?: return null
